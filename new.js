@@ -1,6 +1,5 @@
 $(document).ready(function () {
-  $.getJSON(
-    "https://api.github.com/repos/psychicbalu/java/git/trees/main",
+  $.getJSON(atob("aHR0cHM6Ly9hcGkuZ2l0aHViLmNvbS9yZXBvcy9wc3ljaGljYmFsdS9qYXZhL2dpdC90cmVlcy9tYWlu"),
     (data) => {
       data["tree"].forEach((element) => {
         if (element["path"] == "programs") {

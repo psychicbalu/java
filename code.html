@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Viewer</title>
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    const fileName = window.location.hash.substr(1);
+    fetch("./programs/" + fileName)
+      .then((response) => response.text())
+      .then((data) => {
+        document.getElementById("filename").textContent = fileName;
+        document.title = fileName;
+        const codeTag = document.getElementById("file-content");
+        codeTag.textContent = data;
+      })
+      .catch((error) => console.error(error));
+  </script>
+  <style>
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+      background-color: #202020;
+    }
+
+    pre[class*="language-"] {
+      position: relative;
+      overflow: auto;
+
+      /* make space  */
+      margin: 5px 0;
+      padding: 1.75rem 0 1.75rem 1rem;
+      border-radius: 10px;
+    }
+
+    pre[class*="language-"] button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+
+      font-size: 0.9rem;
+      padding: 0.15rem;
+      background-color: #00ff37;
+
+      border: ridge 1px #7b7b7c;
+      border-radius: 5px;
+      text-shadow: #c4c4c4 0 0 2px;
+    }
+
+    pre[class*="language-"] button:hover {
+      cursor: pointer;
+      background-color: #00fffb;
+    }
+
+    main {
+      display: grid;
+      max-width: 90%;
+      margin: 20px auto;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      color: #c4c4c4;
+      margin: 20px auto;
+    }
+  </style>
+  <link rel="stylesheet" href="prism.css" />
+
+  <body>
+    <main>
+      <h1 id="filename">Error</h1>
+      <pre><code id="file-content" class="language-java">
+      </code></pre>
+    </main>
+    <script>
+      $(document).ready(function () {
+        const copyButtonLabel = "Copy Code";
+        let blocks = document.querySelectorAll("pre");
+        blocks.forEach((block) => {
+          if (navigator.clipboard) {
+            let button = document.createElement("button");
+
+            button.innerText = copyButtonLabel;
+            block.appendChild(button);
+
+            button.addEventListener("click", async () => {
+              await copyCode(block, button);
+            });
+          }
+        });
+
+        async function copyCode(block, button) {
+          let code = block.querySelector("code");
+          let text = code.innerText;
+
+          await navigator.clipboard.writeText(text);
+          button.innerText = "Code Copied";
+
+          setTimeout(() => {
+            button.innerText = copyButtonLabel;
+          }, 700);
+        }
+      });
+    </script>
+    <script src="prism.js"></script>
+  </body>
+</html>

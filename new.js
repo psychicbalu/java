@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $.getJSON(
-    "https://api.github.com/repos/jerrinm4/labexam/git/trees/main",
+    "https://github.com/psychicbalu/java/tree/main/programs",
     (data) => {
       data["tree"].forEach((element) => {
         if (element["path"] == "programs") {

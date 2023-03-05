@@ -10,6 +10,7 @@
       .then((response) => response.text())
       .then((data) => {
         document.getElementById("filename").textContent = fileName;
+        document.getElementById("wget").textContent="wget '"+window.location.protocol + '//' + window.location.host+"/programs/"+fileName+"'";
         document.title = fileName;
         const codeTag = document.getElementById("file-content");
         codeTag.textContent = data;
@@ -70,6 +71,8 @@
   <body>
     <main>
       <h1 id="filename">Error</h1>
+      <pre style="max-height: fit-content;"><code id="wget" class="language-markup">
+      </code></pre>
       <pre><code id="file-content" class="language-java">
       </code></pre>
     </main>
